@@ -1,0 +1,6 @@
+__pycache__
+env
+htmlcov
+.idea/
+Würde .idea/ löschen
+Würde project/__pycache__/ löschen
