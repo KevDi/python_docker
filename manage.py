@@ -26,5 +26,13 @@ def recreate_db():
     db.session.commit()
 
 
+@manager.command
+def seed_db():
+    """Seeds the database."""
+    db.session.add(User(username='kevin', email='kevin@mjkd.de'))
+    db.session.add(User(username='admin', email='admin@mjkd.de'))
+    db.session.commit()
+
+
 if __name__ == '__main__':
     manager.run()
