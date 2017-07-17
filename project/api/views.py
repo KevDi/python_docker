@@ -22,32 +22,40 @@ def add_user():
             'status': 'fail',
             'message': 'Invalid payload.'
         }
-        return make_response(jsonify(response_object)), 400
+        return jsonify(response_object), 400
     username = post_data.get('username')
     email = post_data.get('email')
+    password = post_data.get('password')
     try:
         user = User.query.filter_by(email=email).first()
         if not user:
-            db.session.add(User(username=username, email=email))
+            db.session.add(User(username=username, email=email,password=password))
             db.session.commit()
             response_object = {
                 'status': 'success',
                 'message': email + ' was added!'
             }
-            return make_response(jsonify(response_object)), 201
+            return jsonify(response_object), 201
         else:
             response_object = {
                 'status': 'fail',
                 'message': 'Sorry. That email already exists.'
             }
-            return make_response(jsonify(response_object)), 400
+            return jsonify(response_object), 400
     except exc.IntegrityError as e:
         db.session().rollback()
         response_object = {
             'status': 'fail',
             'message': 'Invalid payload.'
         }
-        return make_response(jsonify(response_object)), 400
+        return jsonify(response_object), 400
+    except (exc.IntegrityError, ValueError) as e:
+        db.session().rollback()
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid payload.'
+        }
+        return jsonify(response_object), 400
 
 
 @users_blueprint.route('/users/<user_id>', methods=['GET'])
