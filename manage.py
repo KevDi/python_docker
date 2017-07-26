@@ -7,7 +7,7 @@ from flask_migrate import MigrateCommand
 from project import create_app, db
 from project.api.models import User
 
-
+#Coverage
 COV = coverage.coverage(
     branch=True,
     include='project/*',
